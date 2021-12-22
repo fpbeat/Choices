@@ -52,6 +52,7 @@ export const DEFAULT_CONFIG: Options = {
   searchFields: ['label', 'value'],
   position: 'auto',
   resetScrollPosition: true,
+  animatedScroll: true,
   shouldSort: true,
   shouldSortItems: false,
   sorter: sortByAlpha,

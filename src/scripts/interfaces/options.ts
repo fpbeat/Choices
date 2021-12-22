@@ -252,6 +252,15 @@ export interface Options {
   resetScrollPosition: boolean;
 
   /**
+   * Animate scroll movement by keyboard
+   *
+   * **Input types affected:** select-multiple
+   *
+   * @default true
+   */
+  animatedScroll: boolean;
+
+  /**
    * Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given.
    *
    * **Input types affected:** select-one, select-multiple

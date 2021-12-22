@@ -1640,7 +1640,7 @@ class Choices implements Choices {
         if (
           !isScrolledIntoView(nextEl, this.choiceList.element, directionInt)
         ) {
-          this.choiceList.scrollToChildElement(nextEl, directionInt);
+          this.choiceList.scrollToChildElement(nextEl, directionInt, this.config.animatedScroll);
         }
         this._highlightChoice(nextEl);
       }

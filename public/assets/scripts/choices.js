@@ -1,4 +1,4 @@
-/*! choices.js v9.0.1 | © 2021 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
+/*! choices.js v9.1.0 | © 2021 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -1749,7 +1749,7 @@ function () {
         // We prevent default to stop the cursor moving
         // when pressing the arrow
         if (!(0, utils_1.isScrolledIntoView)(nextEl, this.choiceList.element, directionInt)) {
-          this.choiceList.scrollToChildElement(nextEl, directionInt);
+          this.choiceList.scrollToChildElement(nextEl, directionInt, this.config.animatedScroll);
         }
 
         this._highlightChoice(nextEl);
@@ -3001,7 +3001,7 @@ function () {
     this.element.scrollTop = 0;
   };
 
-  List.prototype.scrollToChildElement = function (element, direction) {
+  List.prototype.scrollToChildElement = function (element, direction, animatedScroll) {
     var _this = this;
 
     if (!element) {
@@ -3016,9 +3016,14 @@ function () {
     var elementPos = element.offsetTop + elementHeight; // Difference between the element and scroll position
 
     var destination = direction > 0 ? this.element.scrollTop + elementPos - listScrollPosition : element.offsetTop;
-    requestAnimationFrame(function () {
-      _this._animateScroll(destination, direction);
-    });
+
+    if (animatedScroll) {
+      requestAnimationFrame(function () {
+        _this._animateScroll(destination, direction);
+      });
+    } else {
+      this.element.scrollTop = destination;
+    }
   };
 
   List.prototype._scrollDown = function (scrollPos, strength, destination) {
@@ -3493,6 +3498,7 @@ exports.DEFAULT_CONFIG = {
   searchFields: ['label', 'value'],
   position: 'auto',
   resetScrollPosition: true,
+  animatedScroll: true,
   shouldSort: true,
   shouldSortItems: false,
   sorter: utils_1.sortByAlpha,
@@ -3644,7 +3650,7 @@ var sanitise = function (value) {
     return value;
   }
 
-  return value.replace(/&/g, '&amp;').replace(/>/g, '&rt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  return value.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 };
 
 exports.sanitise = sanitise;

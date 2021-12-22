@@ -33,7 +33,7 @@ export default class List {
     this.element.scrollTop = 0;
   }
 
-  scrollToChildElement(element: HTMLElement, direction: 1 | -1): void {
+  scrollToChildElement(element: HTMLElement, direction: 1 | -1, animatedScroll: boolean): void {
     if (!element) {
       return;
     }
@@ -52,9 +52,13 @@ export default class List {
         ? this.element.scrollTop + elementPos - listScrollPosition
         : element.offsetTop;
 
-    requestAnimationFrame(() => {
-      this._animateScroll(destination, direction);
-    });
+    if (animatedScroll) {
+      requestAnimationFrame(() => {
+        this._animateScroll(destination, direction);
+      });
+    } else {
+      this.element.scrollTop = destination;
+    }
   }
 
   _scrollDown(scrollPos: number, strength: number, destination: number): void {
