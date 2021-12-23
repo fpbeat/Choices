@@ -480,7 +480,7 @@ function () {
     var callbackOnInit = this.config.callbackOnInit; // Run callback if it is a function
 
     if (callbackOnInit && typeof callbackOnInit === 'function') {
-      callbackOnInit.call(this);
+      callbackOnInit.call(this, this);
     }
   };
 
@@ -1636,6 +1636,11 @@ function () {
         this._isSearching = false;
 
         this._store.dispatch((0, choices_1.activateChoices)(true));
+
+        this.passedElement.triggerEvent(constants_1.EVENTS.search, {
+          value: value,
+          resultCount: this._presetChoices.length
+        });
       } else if (canSearch) {
         this._handleSearch(this.input.value);
       }
@@ -4581,7 +4586,8 @@ var templates = {
     var input = _a.input,
         inputCloned = _a.inputCloned;
     var inp = Object.assign(document.createElement('input'), {
-      type: 'text',
+      type: 'search',
+      name: 'search_terms',
       className: "".concat(input, " ").concat(inputCloned),
       autocomplete: 'off',
       autocapitalize: 'off',
