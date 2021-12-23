@@ -351,7 +351,7 @@ class Choices implements Choices {
     const { callbackOnInit } = this.config;
     // Run callback if it is a function
     if (callbackOnInit && typeof callbackOnInit === 'function') {
-      callbackOnInit.call(this);
+      callbackOnInit.call(this, this);
     }
   }
 
@@ -1506,6 +1506,11 @@ class Choices implements Choices {
       if (userHasRemovedValue && canReactivateChoices) {
         this._isSearching = false;
         this._store.dispatch(activateChoices(true));
+
+        this.passedElement.triggerEvent(EVENTS.search, {
+          value: value,
+          resultCount: this._presetChoices.length,
+        });
       } else if (canSearch) {
         this._handleSearch(this.input.value);
       }
