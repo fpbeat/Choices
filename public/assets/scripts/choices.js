@@ -1,4 +1,4 @@
-/*! choices.js v9.1.0 | © 2022 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
+/*! choices.js v9.1.5 | © 2022 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -1754,7 +1754,7 @@ function () {
         // We prevent default to stop the cursor moving
         // when pressing the arrow
         if (!(0, utils_1.isScrolledIntoView)(nextEl, this.choiceList.element, directionInt)) {
-          this.choiceList.scrollToChildElement(nextEl, directionInt, this.config.animatedScroll);
+          this.choiceList.scrollToChildElement(nextEl, this.config.animatedScroll);
         }
 
         this._highlightChoice(nextEl);
@@ -3003,19 +3003,14 @@ function () {
     this.element.scrollTop = 0;
   };
 
-  List.prototype.scrollToChildElement = function (element, direction, animatedScroll) {
+  List.prototype.scrollToChildElement = function (element, animatedScroll) {
     if (!element) {
       return;
     }
 
     var scrollBehavior = animatedScroll ? 'smooth' : 'auto';
-    var scrollVerticalBlock = {
-      '0': 'center',
-      '1': 'end',
-      '-1': 'start'
-    };
     element.scrollIntoView({
-      block: scrollVerticalBlock[String(direction)],
+      block: 'nearest',
       behavior: scrollBehavior
     });
   };
