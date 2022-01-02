@@ -2038,7 +2038,7 @@ class Choices implements Choices {
     const choiceId = choices ? choices.length + 1 : 1;
     const choiceElementId = `${this._baseId}-${this._idNames.itemChoice}-${choiceId}`;
 
-    this._store.dispatch(
+    placeholder || this._store.dispatch(
       addChoice({
         id: choiceId,
         groupId,
