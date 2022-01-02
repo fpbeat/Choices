@@ -1,4 +1,4 @@
-/*! choices.js v9.1.0 | © 2021 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
+/*! choices.js v9.1.0 | © 2022 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -2134,8 +2134,7 @@ function () {
     var choiceLabel = label || value;
     var choiceId = choices ? choices.length + 1 : 1;
     var choiceElementId = "".concat(this._baseId, "-").concat(this._idNames.itemChoice, "-").concat(choiceId);
-
-    this._store.dispatch((0, choices_1.addChoice)({
+    placeholder || this._store.dispatch((0, choices_1.addChoice)({
       id: choiceId,
       groupId: groupId,
       elementId: choiceElementId,
@@ -2965,7 +2964,7 @@ exports["default"] = Input;
 /***/ }),
 
 /***/ 624:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports) {
 
 "use strict";
 
@@ -2973,8 +2972,6 @@ exports["default"] = Input;
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-
-var constants_1 = __webpack_require__(883);
 
 var List =
 /** @class */
@@ -3007,68 +3004,20 @@ function () {
   };
 
   List.prototype.scrollToChildElement = function (element, direction, animatedScroll) {
-    var _this = this;
-
     if (!element) {
       return;
     }
 
-    var listHeight = this.element.offsetHeight; // Scroll position of dropdown
-
-    var listScrollPosition = this.element.scrollTop + listHeight;
-    var elementHeight = element.offsetHeight; // Distance from bottom of element to top of parent
-
-    var elementPos = element.offsetTop + elementHeight; // Difference between the element and scroll position
-
-    var destination = direction > 0 ? this.element.scrollTop + elementPos - listScrollPosition : element.offsetTop;
-
-    if (animatedScroll) {
-      requestAnimationFrame(function () {
-        _this._animateScroll(destination, direction);
-      });
-    } else {
-      this.element.scrollTop = destination;
-    }
-  };
-
-  List.prototype._scrollDown = function (scrollPos, strength, destination) {
-    var easing = (destination - scrollPos) / strength;
-    var distance = easing > 1 ? easing : 1;
-    this.element.scrollTop = scrollPos + distance;
-  };
-
-  List.prototype._scrollUp = function (scrollPos, strength, destination) {
-    var easing = (scrollPos - destination) / strength;
-    var distance = easing > 1 ? easing : 1;
-    this.element.scrollTop = scrollPos - distance;
-  };
-
-  List.prototype._animateScroll = function (destination, direction) {
-    var _this = this;
-
-    var strength = constants_1.SCROLLING_SPEED;
-    var choiceListScrollTop = this.element.scrollTop;
-    var continueAnimation = false;
-
-    if (direction > 0) {
-      this._scrollDown(choiceListScrollTop, strength, destination);
-
-      if (choiceListScrollTop < destination) {
-        continueAnimation = true;
-      }
-    } else {
-      this._scrollUp(choiceListScrollTop, strength, destination);
-
-      if (choiceListScrollTop > destination) {
-        continueAnimation = true;
-      }
-    }
-
-    if (continueAnimation) {
-      requestAnimationFrame(function () {
-        _this._animateScroll(destination, direction);
-      });
-    }
+    var scrollBehavior = animatedScroll ? 'smooth' : 'auto';
+    var scrollVerticalBlock = {
+      '0': 'center',
+      '1': 'end',
+      '-1': 'start'
+    };
+    element.scrollIntoView({
+      block: scrollVerticalBlock[String(direction)],
+      behavior: scrollBehavior
+    });
   };
 
   return List;
