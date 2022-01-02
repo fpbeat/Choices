@@ -31,13 +31,14 @@
     this.element.scrollTop = 0;
   }
 
-  scrollToChildElement(element: HTMLElement, animatedScroll: boolean): void {
+  scrollToChildElement(element: HTMLElement, direction: 1 | 0 | -1, animatedScroll: boolean): void {
     if (!element) {
       return;
     }
 
     const scrollBehavior = animatedScroll ? 'smooth' : 'auto';
+    const scrollBlock = direction === 0 ? 'center' : 'nearest';
 
-    element.scrollIntoView({block: 'nearest', behavior: scrollBehavior});
+    element.scrollIntoView({block: scrollBlock, behavior: scrollBehavior});
   }
 }

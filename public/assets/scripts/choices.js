@@ -1754,7 +1754,7 @@ function () {
         // We prevent default to stop the cursor moving
         // when pressing the arrow
         if (!(0, utils_1.isScrolledIntoView)(nextEl, this.choiceList.element, directionInt)) {
-          this.choiceList.scrollToChildElement(nextEl, this.config.animatedScroll);
+          this.choiceList.scrollToChildElement(nextEl, directionInt, this.config.animatedScroll);
         }
 
         this._highlightChoice(nextEl);
@@ -3003,14 +3003,15 @@ function () {
     this.element.scrollTop = 0;
   };
 
-  List.prototype.scrollToChildElement = function (element, animatedScroll) {
+  List.prototype.scrollToChildElement = function (element, direction, animatedScroll) {
     if (!element) {
       return;
     }
 
     var scrollBehavior = animatedScroll ? 'smooth' : 'auto';
+    var scrollBlock = direction === 0 ? 'center' : 'nearest';
     element.scrollIntoView({
-      block: 'nearest',
+      block: scrollBlock,
       behavior: scrollBehavior
     });
   };
