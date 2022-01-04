@@ -36,9 +36,12 @@
       return;
     }
 
-    const scrollBehavior = animatedScroll ? 'smooth' : 'auto';
-    const scrollBlock = direction === 0 ? 'center' : 'nearest';
+    if (direction === 0) {
+      this.element.scrollTop = element.offsetTop - (this.element.offsetHeight / 2) + (element.offsetHeight / 2);
 
-    element.scrollIntoView({block: scrollBlock, behavior: scrollBehavior});
+      return;
+    }
+
+    element.scrollIntoView({block: 'nearest', behavior: animatedScroll ? 'smooth' : 'auto'});
   }
 }

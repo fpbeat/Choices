@@ -3008,11 +3008,14 @@ function () {
       return;
     }
 
-    var scrollBehavior = animatedScroll ? 'smooth' : 'auto';
-    var scrollBlock = direction === 0 ? 'center' : 'nearest';
+    if (direction === 0) {
+      this.element.scrollTop = element.offsetTop - this.element.offsetHeight / 2 + element.offsetHeight / 2;
+      return;
+    }
+
     element.scrollIntoView({
-      block: scrollBlock,
-      behavior: scrollBehavior
+      block: 'nearest',
+      behavior: animatedScroll ? 'smooth' : 'auto'
     });
   };
 
